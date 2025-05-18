@@ -1,0 +1,87 @@
+<nav class="fixed w-full z-50 bg-white/95 shadow-lg">
+  <div class="container-custom">
+    <div class="flex justify-between items-center py-4">
+      <!-- Logo -->
+      <a routerLink="/" (click)="onNavigate()" class="logo-container flex items-center space-x-3">
+        <div class="w-12 h-12 bg-gradient rounded-xl flex items-center justify-center shadow-lg">
+          <span class="text-white text-2xl font-accent font-bold tracking-wider">DP</span>
+        </div>
+        <div class="logo-text">
+          <span class="text-xl font-headline font-bold tracking-wide">
+            <span class="text-primary">DivJi</span> <span class="text-accent">Poly</span>
+          </span>
+        </div>
+      </a>
+
+      <!-- Desktop Menu -->
+      <div class="hidden lg:flex items-center space-x-6">
+        <ng-container *ngFor="let item of menuItems">
+          <a [routerLink]="[item.path]" 
+             [routerLinkActiveOptions]="{ exact: item.exact }" 
+             routerLinkActive="menu-active"
+             (click)="onNavigate()"
+             class="menu-link px-5 py-2.5 rounded-lg font-medium text-warmGray transition-all duration-300">
+            {{item.label}}
+          </a>
+        </ng-container>
+        
+        <div class="ml-4">
+          <a routerLink="/contact" 
+             (click)="onNavigate()"
+             class="px-6 py-2.5 rounded-lg font-accent font-semibold text-white 
+                    bg-gradient shadow-lg transition-all duration-300 
+                    hover:shadow-xl hover:scale-105">
+            Get Quote
+          </a>
+        </div>
+      </div>
+
+      <!-- Mobile Menu Button -->
+      <button class="lg:hidden menu-toggle-btn w-10 h-10 flex items-center justify-center rounded-lg transition-colors duration-300"
+              [class.bg-primary]="isMobileMenuOpen"
+              [class.text-warmGray]="!isMobileMenuOpen"
+              [class.text-white]="isMobileMenuOpen"
+              (click)="toggleMobileMenu()"
+              aria-label="Toggle menu">
+        <div class="menu-icon" [class.active]="isMobileMenuOpen">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+      </button>
+    </div>
+  </div>
+
+  <!-- Mobile Menu -->
+  <div class="lg:hidden mobile-menu"
+       [class.active]="isMobileMenuOpen">
+    <div class="container-custom py-4">
+      <div class="bg-white rounded-2xl shadow-xl overflow-hidden">
+        <div class="p-4 space-y-2">
+          <ng-container *ngFor="let item of menuItems">
+            <a [routerLink]="[item.path]"
+               [routerLinkActiveOptions]="{ exact: item.exact }"
+               routerLinkActive="mobile-active"
+               (click)="onNavigate()"
+               class="mobile-link block px-4 py-3 rounded-xl text-warmGray hover:bg-primary/5 
+                      hover:text-primary transition-all duration-300">
+              {{item.label}}
+            </a>
+          </ng-container>
+          
+          <div class="pt-4">
+            <a routerLink="/contact" 
+               (click)="onNavigate()"
+               class="block text-center px-6 py-3 rounded-xl font-accent font-semibold text-white 
+                      bg-gradient shadow-lg transition-all duration-300 hover:shadow-xl">
+              Get Quote
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- Spacer for fixed navbar -->
+<div class="h-20"></div>

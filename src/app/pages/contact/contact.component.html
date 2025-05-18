@@ -1,0 +1,208 @@
+<!-- Hero Section -->
+<section class="relative py-20 bg-gradient overflow-hidden">
+  <!-- Background Pattern -->
+  <div class="absolute inset-0 opacity-10">
+    <div class="absolute inset-0" style="background-image: url('data:image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%23ffffff\' fill-opacity=\'0.4\'%3E%3Cpath d=\'M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')"></div>
+  </div>
+
+  <div class="container-custom relative z-10">
+    <div class="text-center">
+      <h1 class="title-gradient text-4xl md:text-5xl mb-6">Contact Us</h1>
+      <p class="text-white text-xl max-w-3xl mx-auto">
+        Get in touch with us to discuss your requirements or learn more about our products.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- Contact Section -->
+<section class="section-padding">
+  <div class="container-custom">
+    <div class="grid lg:grid-cols-2 gap-12">
+      <!-- Contact Form -->
+      <div class="card p-8">
+        <h2 class="title-light text-2xl md:text-3xl mb-6">Send us a Message</h2>
+        
+        <!-- Success Message -->
+        <div *ngIf="submitSuccess" class="mb-6 p-4 bg-green-100 text-green-700 rounded-lg">
+          Your message has been sent successfully! We'll get back to you soon.
+        </div>
+
+        <!-- Error Message -->
+        <div *ngIf="submitError" class="mb-6 p-4 bg-red-100 text-red-700 rounded-lg">
+          {{ submitError }}
+        </div>
+
+        <form [formGroup]="contactForm" (ngSubmit)="onSubmit()" class="space-y-6">
+          <div class="grid md:grid-cols-2 gap-6">
+            <div>
+              <label class="block text-warmGray font-medium mb-2">Name</label>
+              <input type="text" 
+                     formControlName="name"
+                     class="w-full px-4 py-3 rounded-lg border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary focus:ring-opacity-20 outline-none transition-colors duration-300"
+                     [class.border-red-500]="name?.invalid && name?.touched">
+              <p *ngIf="name?.invalid && name?.touched" class="mt-1 text-sm text-red-500">
+                {{ getErrorMessage('name') }}
+              </p>
+            </div>
+            <div>
+              <label class="block text-warmGray font-medium mb-2">Email</label>
+              <input type="email" 
+                     formControlName="email"
+                     class="w-full px-4 py-3 rounded-lg border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary focus:ring-opacity-20 outline-none transition-colors duration-300"
+                     [class.border-red-500]="email?.invalid && email?.touched">
+              <p *ngIf="email?.invalid && email?.touched" class="mt-1 text-sm text-red-500">
+                {{ getErrorMessage('email') }}
+              </p>
+            </div>
+          </div>
+          <div>
+            <label class="block text-warmGray font-medium mb-2">Phone Number</label>
+            <input type="tel" 
+                   formControlName="phone"
+                   placeholder="+91 XXXXX XXXXX"
+                   maxlength="13"
+                   class="w-full px-4 py-3 rounded-lg border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary focus:ring-opacity-20 outline-none transition-colors duration-300"
+                   [class.border-red-500]="phone?.invalid && phone?.touched">
+            <p *ngIf="phone?.invalid && phone?.touched" class="mt-1 text-sm text-red-500">
+              {{ getErrorMessage('phone') }}
+            </p>
+          </div>
+          <div>
+            <label class="block text-warmGray font-medium mb-2">Subject</label>
+            <input type="text" 
+                   formControlName="subject"
+                   class="w-full px-4 py-3 rounded-lg border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary focus:ring-opacity-20 outline-none transition-colors duration-300"
+                   [class.border-red-500]="subject?.invalid && subject?.touched">
+            <p *ngIf="subject?.invalid && subject?.touched" class="mt-1 text-sm text-red-500">
+              {{ getErrorMessage('subject') }}
+            </p>
+          </div>
+          <div>
+            <label class="block text-warmGray font-medium mb-2">Message</label>
+            <textarea rows="4" 
+                      formControlName="message"
+                      class="w-full px-4 py-3 rounded-lg border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary focus:ring-opacity-20 outline-none transition-colors duration-300"
+                      [class.border-red-500]="message?.invalid && message?.touched"></textarea>
+            <p *ngIf="message?.invalid && message?.touched" class="mt-1 text-sm text-red-500">
+              {{ getErrorMessage('message') }}
+            </p>
+          </div>
+          <button type="submit" 
+                  class="btn-primary w-full flex items-center justify-center transition-all duration-300"
+                  [class.opacity-50]="isSubmitting || contactForm.invalid"
+                  [class.cursor-not-allowed]="isSubmitting || contactForm.invalid"
+                  [disabled]="isSubmitting || contactForm.invalid">
+            <span *ngIf="isSubmitting" class="mr-2">
+              <!-- Loading spinner -->
+              <svg class="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+              </svg>
+            </span>
+            {{ isSubmitting ? 'Sending...' : 'Send Message' }}
+          </button>
+        </form>
+      </div>
+
+      <!-- Contact Information -->
+      <div class="space-y-8">
+        <div>
+          <h2 class="title-light text-2xl md:text-3xl mb-6">Contact Information</h2>
+          <p class="text-warmGray mb-6">
+            Feel free to reach out to us through any of the following channels:
+          </p>
+        </div>
+
+        <!-- Address -->
+        <div class="card card-hover p-6">
+          <div class="flex items-start">
+            <div class="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center mr-4">
+              <svg class="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                      d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z">
+                </path>
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                      d="M15 11a3 3 0 11-6 0 3 3 0 016 0z">
+                </path>
+              </svg>
+            </div>
+            <div>
+              <h3 class="title-light text-lg mb-2">Office Address</h3>
+              <p class="text-warmGray">
+                GIDC Industrial Area,<br>
+                Ring Road, Nikol<br>
+                Ahmedabad, Gujarat 382350
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Phone -->
+        <div class="card card-hover p-6">
+          <div class="flex items-start">
+            <div class="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center mr-4">
+              <svg class="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                      d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z">
+                </path>
+              </svg>
+            </div>
+            <div>
+              <h3 class="title-light text-lg mb-2">Phone Numbers</h3>
+              <p class="text-warmGray">
+                Sales: +91 98765 43210<br>
+                Support: +91 98765 43211
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Email -->
+        <div class="card card-hover p-6">
+          <div class="flex items-start">
+            <div class="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center mr-4">
+              <svg class="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                      d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z">
+                </path>
+              </svg>
+            </div>
+            <div>
+              <h3 class="title-light text-lg mb-2">Email Addresses</h3>
+              <p class="text-warmGray">
+                Sales: sales&#64;divjipoly.com<br>
+                Support: support&#64;divjipoly.com
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Map Section -->
+<section class="section-padding bg-backgroundLight">
+  <div class="container-custom">
+    <h2 class="title-light text-2xl md:text-3xl mb-8 text-center">Our Location</h2>
+    <div class="aspect-video rounded-xl overflow-hidden shadow-lg">
+      <iframe 
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3671.0245843391227!2d72.67678867599731!3d23.058333179120386!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x395e87c640000001%3A0x7d1ac05a4c5ada2c!2sGIDC%20Nikol%2C%20Ring%20Rd%2C%20Nikol%2C%20Ahmedabad%2C%20Gujarat%20382350!5e0!3m2!1sen!2sin!4v1704908547833!5m2!1sen!2sin"
+        width="100%" 
+        height="100%" 
+        style="border:0;" 
+        allowfullscreen="" 
+        loading="lazy" 
+        referrerpolicy="no-referrer-when-downgrade">
+      </iframe>
+    </div>
+    <div class="mt-6 text-center">
+      <p class="text-warmGray">
+        <strong>GIDC Industrial Area</strong><br>
+        Ring Road, Nikol<br>
+        Ahmedabad, Gujarat 382350
+      </p>
+    </div>
+  </div>
+</section>
