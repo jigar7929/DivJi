@@ -119,55 +119,30 @@
       </p>
     </div>
 
-    <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-      <!-- HDPE -->
-      <div class="card card-hover group">
-        <div class="aspect-square bg-gradient rounded-t-xl flex items-center justify-center p-8">
-          <div class="text-white text-4xl font-bold">HDPE</div>
+    <!-- Swiper Carousel -->
+    <swiper-container 
+      initial-slide="0" 
+      [attr.pagination]="showNavigation"
+      [attr.navigation]="showNavigation"
+      slides-per-view="2"
+      space-between="30">
+      <swiper-slide *ngFor="let product of products">
+        <div class="product-card card card-hover group">
+          <div class="aspect-square bg-gradient rounded-t-xl flex items-center justify-center p-8">
+            <div class="text-white text-4xl font-bold">{{product.type}}</div>
+          </div>
+          <div class="p-6">
+            <h3 class="title-light text-xl mb-2">{{product.type}} Granules</h3>
+            <p class="text-warmGray mb-4">{{product.fullForm}}</p>
+            <a [routerLink]="['/products']" 
+               [queryParams]="{type: product.type}"
+               class="text-primary font-medium hover:text-secondary">
+              Learn More →
+            </a>
+          </div>
         </div>
-        <div class="p-6">
-          <h3 class="title-light text-xl mb-2">HDPE Granules</h3>
-          <p class="text-warmGray mb-4">High-density polyethylene for superior strength and durability.</p>
-          <a [routerLink]="['/products']" class="text-primary font-medium hover:text-secondary">Learn More →</a>
-        </div>
-      </div>
-
-      <!-- LDPE -->
-      <div class="card card-hover group">
-        <div class="aspect-square bg-gradient rounded-t-xl flex items-center justify-center p-8">
-          <div class="text-white text-4xl font-bold">LDPE</div>
-        </div>
-        <div class="p-6">
-          <h3 class="title-light text-xl mb-2">LDPE Granules</h3>
-          <p class="text-warmGray mb-4">Low-density polyethylene for flexibility and versatility.</p>
-          <a [routerLink]="['/products']" class="text-primary font-medium hover:text-secondary">Learn More →</a>
-        </div>
-      </div>
-
-      <!-- Recycled -->
-      <div class="card card-hover group">
-        <div class="aspect-square bg-gradient rounded-t-xl flex items-center justify-center p-8">
-          <div class="text-white text-4xl font-bold">REC</div>
-        </div>
-        <div class="p-6">
-          <h3 class="title-light text-xl mb-2">Recycled Granules</h3>
-          <p class="text-warmGray mb-4">Sustainable solutions for eco-conscious manufacturing.</p>
-          <a [routerLink]="['/products']" class="text-primary font-medium hover:text-secondary">Learn More →</a>
-        </div>
-      </div>
-
-      <!-- Custom -->
-      <div class="card card-hover group">
-        <div class="aspect-square bg-gradient rounded-t-xl flex items-center justify-center p-8">
-          <div class="text-white text-4xl font-bold">CST</div>
-        </div>
-        <div class="p-6">
-          <h3 class="title-light text-xl mb-2">Custom Solutions</h3>
-          <p class="text-warmGray mb-4">Tailored granules for specific application needs.</p>
-          <a [routerLink]="['/products']" class="text-primary font-medium hover:text-secondary">Learn More →</a>
-        </div>
-      </div>
-    </div>
+      </swiper-slide>
+    </swiper-container>
   </div>
 </section>
 

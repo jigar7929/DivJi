@@ -1,50 +1,52 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, from, forkJoin } from 'rxjs';
+import { init, send } from '@emailjs/browser';
 
 export interface EmailData {
   name: string;
   email: string;
+  phone: string;
   subject: string;
   message: string;
 }
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class EmailService {
-  // Default email configuration - to be replaced later
-  private emailConfig = {
-    to: 'default@divjipoly.com',
-    smtp: {
-      host: 'smtp.gmail.com',
-      port: 587,
-      secure: false,
-      auth: {
-        user: 'your-email@gmail.com', // to be replaced
-        pass: 'your-app-password' // to be replaced
-      }
-    }
-  };
+  private readonly SERVICE_ID = 'service_2iz9nkp';
+  private readonly TEMPLATE_ID = 'template_x5fixto';
+  private readonly ADMIN_TEMPLATE_ID = 'template_ucv6jr3';
+  private readonly PUBLIC_KEY = 'j5aotIgjqwsIKo7Et';
 
-  constructor(private http: HttpClient) {}
+  constructor() {
+    init(this.PUBLIC_KEY);
+  }
 
   sendEmail(data: EmailData): Observable<any> {
-    // For now, we'll use EmailJS as a temporary solution
-    // Replace with your actual email service implementation
-    const emailJsConfig = {
-      service_id: 'default_service',
-      template_id: 'template_default',
-      user_id: 'your-emailjs-user-id', // to be replaced
-      template_params: {
-        to_email: this.emailConfig.to,
-        from_name: data.name,
-        from_email: data.email,
-        subject: data.subject,
-        message: data.message
-      }
+    const templateParams = {
+      name: data.name,
+      reply_to: data.email,
+      phone_number: data.phone,
+      subject: data.subject,
+      message: data.message,
+      to_email: 'info@divjipoly.com',
+      email: data.email,
     };
 
-    return this.http.post('https://api.emailjs.com/api/v1.0/email/send', emailJsConfig);
+    const admin_templateParams = {
+      name: data.name,
+      reply_to: 'jigar.shiroya7929@gmail.com',
+      phone_number: data.phone,
+      subject: data.subject,
+      message: data.message,
+      to_email: 'info@divjipoly.com',
+      email: data.email,
+    };
+
+    return forkJoin([
+      from(send(this.SERVICE_ID, this.ADMIN_TEMPLATE_ID, admin_templateParams)), // to yourself
+      from(send(this.SERVICE_ID, this.TEMPLATE_ID, templateParams)), // to user
+    ]);
   }
 }

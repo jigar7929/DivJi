@@ -1,0 +1,233 @@
+{
+    "plasticGranules": [
+        {
+            "type": "HDPE",
+            "fullForm": "High-Density Polyethylene",
+            "recyclingCode": 2,
+            "grades": [
+                {
+                    "code": "HDPE-GP",
+                    "name": "General Purpose",
+                    "description": "Good balance of strength and flexibility.",
+                    "uses": ["Containers", "Bottles", "Household items"],
+                    "products": ["Milk jugs", "Detergent bottles", "Storage bins"],
+                    "mfi": "0.4 - 0.5 g/10 min",
+                    "density": "0.941 - 0.965 g/cm³",
+                    "processingMethods": ["Injection molding", "Blow molding"],
+                    "machineryUsed": ["Injection molding machine", "Blow molding machine"],
+                    "industries": ["Packaging", "Consumer goods", "Household"]
+                },
+                {
+                    "code": "HDPE-HMW",
+                    "name": "High Molecular Weight",
+                    "description": "Enhanced strength and impact resistance.",
+                    "uses": ["Industrial applications"],
+                    "products": ["Large drums", "Industrial containers", "Heavy-duty liners"],
+                    "mfi": "0.05 - 0.2 g/10 min",
+                    "density": "0.960 - 0.965 g/cm³",
+                    "processingMethods": ["Blow molding", "Extrusion"],
+                    "machineryUsed": ["Extrusion machine", "Blow molding machine"],
+                    "industries": ["Industrial", "Chemical storage"]
+                },
+                {
+                    "code": "HDPE-BM",
+                    "name": "Blow Molding",
+                    "description": "Suitable for creating hollow objects.",
+                    "uses": ["Hollow objects"],
+                    "products": ["Water bottles", "Fuel tanks", "Large containers"],
+                    "mfi": "0.2 - 1.0 g/10 min",
+                    "density": "0.945 - 0.960 g/cm³",
+                    "processingMethods": ["Blow molding"],
+                    "machineryUsed": ["Blow molding machine"],
+                    "industries": ["Packaging", "Automotive", "Industrial"]
+                },
+                {
+                    "code": "HDPE-IM",
+                    "name": "Injection Molding",
+                    "description": "Designed for precision and detail.",
+                    "uses": ["Precision parts"],
+                    "products": ["Caps", "Closures", "Small mechanical parts"],
+                    "mfi": "4.0 - 8.0 g/10 min",
+                    "density": "0.941 - 0.955 g/cm³",
+                    "processingMethods": ["Injection molding"],
+                    "machineryUsed": ["Injection molding machine"],
+                    "industries": ["Automotive", "Consumer goods"]
+                },
+                {
+                    "code": "HDPE-FG",
+                    "name": "Film Grade",
+                    "description": "Flexible and thin.",
+                    "uses": ["Thin, flexible applications"],
+                    "products": ["Plastic bags", "Agricultural films", "Packaging wraps"],
+                    "mfi": "0.05 - 0.15 g/10 min",
+                    "density": "0.925 - 0.935 g/cm³",
+                    "processingMethods": ["Film extrusion"],
+                    "machineryUsed": ["Film extrusion machine"],
+                    "industries": ["Agriculture", "Packaging"]
+                }
+            ]
+        },
+        {
+            "type": "LDPE",
+            "fullForm": "Low-Density Polyethylene",
+            "recyclingCode": 4,
+            "grades": [
+                {
+                    "code": "LDPE-GP",
+                    "name": "General Purpose",
+                    "description": "Flexible and soft plastic.",
+                    "uses": ["Film wraps", "Grocery bags", "Food storage containers"],
+                    "products": ["Plastic wraps", "Sandwich bags", "Squeeze bottles"],
+                    "mfi": "0.2 - 30 g/10 min",
+                    "density": "0.910 - 0.940 g/cm³",
+                    "processingMethods": ["Film extrusion", "Injection molding"],
+                    "machineryUsed": ["Film extrusion machine", "Injection molding machine"],
+                    "industries": ["Packaging", "Food storage"]
+                }
+            ]
+        },
+        {
+            "type": "PP",
+            "fullForm": "Polypropylene",
+            "recyclingCode": 5,
+            "grades": [
+                {
+                    "code": "PP-HM",
+                    "name": "Homopolymer",
+                    "description": "High stiffness and strength. Commonly used in rigid and structural applications.",
+                    "uses": ["Stiff applications", "Structural parts", "High-performance packaging"],
+                    "products": ["Textiles", "Automotive parts", "Living hinges", "Caps and closures"],
+                    "mfi": "1 - 30 g/10 min",
+                    "density": "0.905 g/cm³",
+                    "processingMethods": ["Injection molding", "Extrusion", "Blow molding"],
+                    "machineryUsed": ["Injection molding machine", "Extruder", "Blow molding machine"],
+                    "industries": ["Automotive", "Textile", "Consumer Goods", "Packaging"]
+                },
+                {
+                    "code": "PP-CP",
+                    "name": "Copolymer",
+                    "description": "Improved impact resistance and flexibility compared to homopolymer.",
+                    "uses": ["Impact-resistant applications", "Flexible packaging", "Cold weather products"],
+                    "products": ["Packaging", "Containers", "Medical devices", "Toys"],
+                    "mfi": "0.3 - 50 g/10 min",
+                    "density": "0.900 - 0.910 g/cm³",
+                    "processingMethods": ["Injection molding", "Thermoforming", "Blow molding"],
+                    "machineryUsed": ["Injection molding machine", "Thermoforming machine", "Blow molding machine"],
+                    "industries": ["Medical", "Food Packaging", "Consumer Products", "Automotive"]
+                }
+            ]
+        },
+        {
+            "type": "PVC",
+            "fullForm": "Polyvinyl Chloride",
+            "recyclingCode": 3,
+            "grades": [
+                {
+                    "code": "PVC-R",
+                    "name": "Rigid",
+                    "description": "Rigid PVC is durable, tough, and has good chemical resistance. Used for structural and pressure applications.",
+                    "uses": ["Structural applications", "Piping systems", "Window profiles"],
+                    "products": ["Pipes", "Window frames", "Construction materials", "Electrical conduits"],
+                    "mfi": "Not typically measured for rigid PVC",
+                    "density": "1.3 - 1.45 g/cm³",
+                    "processingMethods": ["Extrusion", "Injection molding"],
+                    "machineryUsed": ["Extruder", "Injection molding machine"],
+                    "industries": ["Construction", "Electrical", "Plumbing"]
+                },
+                {
+                    "code": "PVC-F",
+                    "name": "Flexible",
+                    "description": "Flexible PVC is softer and more pliable due to the addition of plasticizers.",
+                    "uses": ["Flexible applications", "Insulation", "Medical tubing"],
+                    "products": ["Cables", "Hoses", "Medical tubing", "Inflatable products"],
+                    "mfi": "Not typically measured for flexible PVC",
+                    "density": "1.1 - 1.35 g/cm³",
+                    "processingMethods": ["Extrusion", "Calendering", "Injection molding"],
+                    "machineryUsed": ["Extruder", "Calendering machine", "Injection molding machine"],
+                    "industries": ["Medical", "Electrical", "Automotive", "Consumer Goods"]
+                }
+            ]
+        },
+        {
+            "type": "PS",
+            "fullForm": "Polystyrene",
+            "recyclingCode": 6,
+            "grades": [
+                {
+                    "code": "PS-GP",
+                    "name": "General Purpose",
+                    "description": "General Purpose Polystyrene is clear, rigid, and brittle. It's commonly used where clarity and dimensional stability are required.",
+                    "uses": ["Clear, rigid applications", "Lightweight packaging"],
+                    "products": ["CD cases", "Laboratory ware", "Clear packaging", "Disposable cutlery"],
+                    "mfi": "2 - 15 g/10 min",
+                    "density": "1.04 - 1.06 g/cm³",
+                    "processingMethods": ["Injection molding", "Extrusion"],
+                    "machineryUsed": ["Injection molding machine", "Extruder"],
+                    "industries": ["Packaging", "Laboratory", "Consumer Goods"]
+                },
+                {
+                    "code": "PS-HI",
+                    "name": "High Impact",
+                    "description": "High Impact Polystyrene is modified with rubber to improve toughness. It offers better impact resistance than general-purpose PS.",
+                    "uses": ["Durable applications", "Housings", "Toys"],
+                    "products": ["Toys", "Appliance housings", "Automotive parts", "Refrigerator liners"],
+                    "mfi": "1 - 10 g/10 min",
+                    "density": "1.03 - 1.06 g/cm³",
+                    "processingMethods": ["Injection molding", "Thermoforming"],
+                    "machineryUsed": ["Injection molding machine", "Thermoforming machine"],
+                    "industries": ["Appliances", "Automotive", "Toys", "Packaging"]
+                }
+            ]
+        },
+        {
+            "type": "PET",
+            "fullForm": "Polyethylene Terephthalate",
+            "recyclingCode": 1,
+            "grades": [
+                {
+                    "code": "PET-BG",
+                    "name": "Bottle Grade",
+                    "description": "Bottle grade PET is used for clear, strong containers and is highly recyclable. It provides excellent gas and moisture barrier properties.",
+                    "uses": ["Beverage bottles", "Food containers"],
+                    "products": ["Water bottles", "Soda bottles", "Food jars"],
+                    "mfi": "0.6 - 1.2 g/10 min",
+                    "density": "1.38 - 1.40 g/cm³",
+                    "processingMethods": ["Injection molding", "Stretch blow molding"],
+                    "machineryUsed": ["Injection molding machine", "Stretch blow molding machine"],
+                    "industries": ["Beverage", "Food packaging", "Pharmaceutical"]
+                },
+                {
+                    "code": "PET-FG",
+                    "name": "Fiber Grade",
+                    "description": "Fiber grade PET is used to manufacture synthetic fibers for textiles and industrial applications. It has high strength and durability.",
+                    "uses": ["Textiles", "Carpets"],
+                    "products": ["Clothing fibers", "Carpet fibers", "Upholstery"],
+                    "mfi": "0.5 - 1.0 g/10 min",
+                    "density": "1.36 - 1.40 g/cm³",
+                    "processingMethods": ["Melt spinning", "Extrusion"],
+                    "machineryUsed": ["Spinning machine", "Extruder"],
+                    "industries": ["Textile", "Automotive", "Home furnishing"]
+                }
+            ]
+        },
+        {
+            "type": "ABS",
+            "fullForm": "Acrylonitrile Butadiene Styrene",
+            "recyclingCode": 7,
+            "grades": [
+                {
+                    "code": "ABS-GP",
+                    "name": "General Purpose",
+                    "description": "Strong, tough, and impact-resistant plastic with good dimensional stability. Known for its glossy finish and easy machinability.",
+                    "uses": ["Consumer electronics", "Automotive parts", "Toys"],
+                    "products": ["Lego bricks", "Computer housings", "Dashboard components"],
+                    "mfi": "1.5 - 15 g/10 min",
+                    "density": "1.03 - 1.07 g/cm³",
+                    "processingMethods": ["Injection molding", "Extrusion", "3D printing"],
+                    "machineryUsed": ["Injection molding machine", "Extruder", "3D printer"],
+                    "industries": ["Electronics", "Automotive", "Toys", "Appliances"]
+                }
+            ]
+        }
+    ]
+}

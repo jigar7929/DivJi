@@ -60,15 +60,21 @@
 
       <!-- Products -->
       <div>
-        <h3 class="text-lg font-semibold mb-4">Products</h3>
-        <ul class="space-y-2">
-          <li *ngFor="let product of products">
-            <a [routerLink]="['/products']" class="text-gray-400 hover:text-white transition-colors">
-              {{product.label}}
-            </a>
-          </li>
-        </ul>
-      </div>
+  <h3 class="text-lg font-semibold mb-4">Products</h3>
+<div class="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
+  <div *ngFor="let productGroup of chunkArray(products, 4)">
+    <ul class="space-y-2">
+      <li *ngFor="let product of productGroup">
+        <a [routerLink]="['/products']" 
+           [queryParams]="{type: product.type}"
+           class="text-gray-400 hover:text-white transition-colors">
+          {{product.type}}
+        </a>
+      </li>
+    </ul>
+  </div>
+  </div>
+</div>
 
       <!-- Contact Info -->
       <div>
