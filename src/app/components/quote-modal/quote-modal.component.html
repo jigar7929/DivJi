@@ -1,0 +1,118 @@
+<div>
+  <div *ngIf="showModal" class="fixed inset-0 bg-black bg-opacity-60 backdrop-blur-sm flex items-center justify-center z-50 modal-container overflow-y-auto">
+    <div class="bg-white rounded-xl shadow-2xl max-w-lg w-full relative transform transition-all duration-300 ease-out modal-content">
+      <div class="flex justify-between items-center mb-6 p-8 pb-0">
+        <h2 class="text-2xl font-bold text-teal-800">Request a Quote</h2>
+        <button (click)="closeModal()" class="text-teal-600 hover:text-teal-800 transition-colors">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+      
+      <!-- Success Message -->
+      <div *ngIf="showSuccessMessage" class="mx-8 mb-4 p-4 bg-green-100 text-green-700 rounded-lg">
+        Quote request sent successfully! We'll get back to you soon.
+      </div>
+
+      <!-- Error Message -->
+      <div *ngIf="showErrorMessage" class="mx-8 mb-4 p-4 bg-red-100 text-red-700 rounded-lg">
+        {{ errorMessage }}
+      </div>
+
+      <form [formGroup]="quoteForm" (ngSubmit)="onSubmit()" class="space-y-5 p-8">
+        <!-- Name -->
+        <div>
+          <label class="block mb-2 font-semibold text-gray-700">Name <span class="text-red-500">*</span></label>
+          <input type="text" formControlName="name" 
+                 class="w-full border-2 border-gray-200 rounded-lg px-4 py-3 focus:outline-none focus:border-teal-500 transition-colors" 
+                 placeholder="Enter your name" />
+          <div *ngIf="quoteForm.get('name')?.touched && quoteForm.get('name')?.invalid" class="text-red-500 text-sm mt-1">
+            Name is required
+          </div>
+        </div>
+
+        <!-- Email -->
+        <div>
+          <label class="block mb-2 font-semibold text-gray-700">Email <span class="text-red-500">*</span></label>
+          <input type="email" formControlName="email" 
+                 class="w-full border-2 border-gray-200 rounded-lg px-4 py-3 focus:outline-none focus:border-teal-500 transition-colors" 
+                 placeholder="Enter your email" />
+          <div *ngIf="quoteForm.get('email')?.touched && quoteForm.get('email')?.invalid" class="text-red-500 text-sm mt-1">
+            <span *ngIf="quoteForm.get('email')?.errors?.['required']">Email is required</span>
+            <span *ngIf="quoteForm.get('email')?.errors?.['email']">Please enter a valid email</span>
+          </div>
+        </div>
+
+        <!-- Phone -->
+        <div>
+          <label class="block mb-2 font-semibold text-gray-700">Phone <span class="text-red-500">*</span></label>
+          <input type="tel" formControlName="phone" 
+                 class="w-full border-2 border-gray-200 rounded-lg px-4 py-3 focus:outline-none focus:border-teal-500 transition-colors" 
+                 placeholder="Enter your phone number" />
+          <div *ngIf="quoteForm.get('phone')?.touched && quoteForm.get('phone')?.invalid" class="text-red-500 text-sm mt-1">
+            Please enter a valid 10-digit phone number
+          </div>
+        </div>
+
+        <!-- Products -->
+        <div>
+          <label class="block mb-2 font-semibold text-gray-700">Products <span class="text-red-500">*</span></label>
+          <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-4" formArrayName="selectedProducts">
+            <div *ngFor="let product of products; let i = index" class="flex items-center">
+              <input type="checkbox" [formControlName]="i" 
+                     class="w-4 h-4 text-teal-600 border-gray-300 rounded focus:ring-teal-500" />
+              <label class="ml-2 text-gray-700">{{product.type}}</label>
+            </div>
+          </div>
+
+          <!-- Other Product -->
+          <div class="mt-4">
+            <input type="text" formControlName="otherProduct" 
+                   class="w-full border-2 border-gray-200 rounded-lg px-4 py-3 focus:outline-none focus:border-teal-500 transition-colors" 
+                   placeholder="Other product (if any)" />
+          </div>
+           <div *ngIf="!validateProducts() && quoteForm.touched" class="text-red-500 text-sm mt-1">
+            Please select at least one product or specify other product
+          </div>
+        </div>
+
+        <!-- Message -->
+        <div>
+          <label class="block mb-2 font-semibold text-gray-700">Message <span class="text-red-500">*</span></label>
+          <textarea formControlName="message" 
+                    class="w-full border-2 border-gray-200 rounded-lg px-4 py-3 focus:outline-none focus:border-teal-500 transition-colors" 
+                    rows="4" 
+                    placeholder="Please add your requirement: e.g., product grade, quantity, usage of granules, delivery location, etc."></textarea>
+          <div *ngIf="quoteForm.get('message')?.touched && quoteForm.get('message')?.invalid" class="text-red-500 text-sm mt-1">
+            Message is required
+          </div>
+        </div>
+
+        <!-- Submit Buttons -->
+        <div class="flex justify-end space-x-3 mt-8">
+          <button type="button" 
+                  (click)="closeModal()" 
+                  class="px-6 py-3 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors font-medium"
+                  [disabled]="isSubmitting">
+            Cancel
+          </button>
+          <button type="submit" 
+                  class="px-6 py-3 bg-teal-600 text-white rounded-lg hover:bg-teal-700 transition-colors font-medium flex items-center"
+                   [class.opacity-50]="isSubmitting || quoteForm.invalid"
+                  [class.cursor-not-allowed]="isSubmitting || quoteForm.invalid"
+                  [disabled]="isSubmitting || quoteForm.invalid">
+            <span *ngIf="!isSubmitting">Submit Quote Request</span>
+            <span *ngIf="isSubmitting" class="flex items-center">
+              <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+              </svg>
+              Submitting...
+            </span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

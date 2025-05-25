@@ -2,13 +2,31 @@
   <div class="container-custom">
     <div class="flex justify-between items-center py-4">
       <!-- Logo -->
-      <a routerLink="/" (click)="onNavigate()" class="logo-container flex items-center space-x-3">
-        <div class="w-12 h-12 bg-gradient rounded-xl flex items-center justify-center shadow-lg">
-          <span class="text-white text-2xl font-accent font-bold tracking-wider">DP</span>
+      <a routerLink="/" (click)="onNavigate()" class="logo-container flex items-center space-x-2">
+        <div class="w-12 h-12 flex items-center justify-center">
+          <svg width="52" height="52" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-label="DivJi Logo" role="img" class="transform hover:scale-105 transition-transform duration-300">
+            <defs>
+              <linearGradient id="navDGradient" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stop-color="#006D77" />
+                <stop offset="100%" stop-color="#83C5BE" />
+              </linearGradient>
+              <linearGradient id="navDHighlight" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stop-color="#83C5BE" />
+                <stop offset="100%" stop-color="#E9ECEF" />
+              </linearGradient>
+              <linearGradient id="navJGradient" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stop-color="#2C6E49" />
+                <stop offset="100%" stop-color="#006D77" />
+              </linearGradient>
+            </defs>
+            <path fill="url(#navDGradient)" d="M30 20 L60 20 A25 30 0 0 1 60 80 L30 80 Z" />
+            <path fill="url(#navDHighlight)" opacity="0.35" mix-blend-mode="screen" d="M35 25 L55 25 Q70 25 70 50 Q70 60 55 60 L35 60 Z" />
+            <path fill="white" stroke="url(#navJGradient)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" d="M62 35 Q75 40 68 75 Q65 88 50 80" />
+          </svg>
         </div>
         <div class="logo-text">
           <span class="text-xl font-headline font-bold tracking-wide">
-            <span class="text-primary">DivJi</span> <span class="text-accent">Poly</span>
+            <span class="text-primary">DivJi</span><span class="text-accent">Poly</span>
           </span>
         </div>
       </a>
@@ -16,18 +34,41 @@
       <!-- Desktop Menu -->
       <div class="hidden lg:flex items-center space-x-6">
         <ng-container *ngFor="let item of menuItems">
-          <a [routerLink]="[item.path]" 
-             [routerLinkActiveOptions]="{ exact: item.exact }" 
-             routerLinkActive="menu-active"
-             (click)="onNavigate()"
-             class="menu-link px-5 py-2.5 rounded-lg font-medium text-warmGray transition-all duration-300">
-            {{item.label}}
-          </a>
+          <ng-container *ngIf="!item.hasDropdown">
+            <a [routerLink]="[item.path]" 
+               [routerLinkActiveOptions]="{ exact: item.exact }" 
+               routerLinkActive="menu-active"
+               (click)="onNavigate()"
+               class="menu-link px-5 py-2.5 rounded-lg font-medium text-warmGray transition-all duration-300">
+              {{item.label}}
+            </a>
+          </ng-container>
+          <div *ngIf="item.hasDropdown" class="relative products-dropdown">
+            <a href="#" 
+               (click)="toggleProductsDropdown($event)"
+               class="menu-link px-5 py-2.5 rounded-lg font-medium text-warmGray transition-all duration-300 flex items-center space-x-1">
+              <span>{{item.label}}</span>
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+              </svg>
+            </a>
+            <!-- Products Dropdown -->
+            <div *ngIf="isProductsDropdownOpen" 
+                 class="absolute top-full left-0 mt-2 w-56 bg-white rounded-xl shadow-lg py-2 z-50">
+              <a *ngFor="let product of products"
+                 [routerLink]="['/products']"
+                 [queryParams]="{type: product.type}"
+                 (click)="onNavigate()"
+                 class="block px-4 py-2 text-warmGray hover:text-primary hover:bg-gray-50 transition-colors">
+                {{product.type}}
+              </a>
+            </div>
+          </div>
         </ng-container>
         
         <div class="ml-4">
-          <a routerLink="/contact" 
-             (click)="onNavigate()"
+          <a href="#" 
+             (click)="openQuoteModal()"
              class="px-6 py-2.5 rounded-lg font-accent font-semibold text-white 
                     bg-gradient shadow-lg transition-all duration-300 
                     hover:shadow-xl hover:scale-105">
@@ -59,19 +100,31 @@
       <div class="bg-white rounded-2xl shadow-xl overflow-hidden">
         <div class="p-4 space-y-2">
           <ng-container *ngFor="let item of menuItems">
-            <a [routerLink]="[item.path]"
-               [routerLinkActiveOptions]="{ exact: item.exact }"
-               routerLinkActive="mobile-active"
-               (click)="onNavigate()"
-               class="mobile-link block px-4 py-3 rounded-xl text-warmGray hover:bg-primary/5 
-                      hover:text-primary transition-all duration-300">
-              {{item.label}}
-            </a>
+            <ng-container *ngIf="!item.hasDropdown">
+              <a [routerLink]="[item.path]"
+                 [routerLinkActiveOptions]="{ exact: item.exact }"
+                 routerLinkActive="mobile-active"
+                 (click)="onNavigate()"
+                 class="mobile-link block px-4 py-3 rounded-xl text-warmGray hover:bg-primary/5 
+                        hover:text-primary transition-all duration-300">
+                {{item.label}}
+              </a>
+            </ng-container>
+            <div *ngIf="item.hasDropdown" class="space-y-1">
+              <div class="px-4 py-2 text-sm font-medium text-gray-500">{{item.label}}</div>
+              <a *ngFor="let product of products"
+                 [routerLink]="['/products']"
+                 [queryParams]="{type: product.type}"
+                 (click)="onNavigate()"
+                 class="block px-6 py-2 text-warmGray hover:text-primary hover:bg-primary/5 transition-colors">
+                {{product.type}}
+              </a>
+            </div>
           </ng-container>
           
           <div class="pt-4">
-            <a routerLink="/contact" 
-               (click)="onNavigate()"
+            <a href="#" 
+               (click)="openQuoteModal()"
                class="block text-center px-6 py-3 rounded-xl font-accent font-semibold text-white 
                       bg-gradient shadow-lg transition-all duration-300 hover:shadow-xl">
               Get Quote

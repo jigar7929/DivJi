@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="192" height="192" viewBox="0 0 192 192">
+  <defs>
+    <linearGradient id="navDGradient" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#006D77"/>
+      <stop offset="100%" stop-color="#83C5BE"/>
+    </linearGradient>
+    <linearGradient id="navDHighlight" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#83C5BE"/>
+      <stop offset="100%" stop-color="#E9ECEF"/>
+    </linearGradient>
+    <linearGradient id="navJGradient" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#2C6E49"/>
+      <stop offset="100%" stop-color="#006D77"/>
+    </linearGradient>
+  </defs>
+  <path fill="url(#navDGradient)" d="M36 24L108 24A48 60 0 01108 168L36 168Z"/>
+  <path fill="url(#navDHighlight)" opacity=".35" mix-blend-mode="screen" d="M48 36L96 36Q132 36 132 96Q132 120 96 120L48 120Z"/>
+  <path fill="white" stroke="url(#navJGradient)" stroke-width="12" stroke-linecap="round" stroke-linejoin="round" d="M114 60Q144 72 126 144Q120 168 90 156"/>
+</svg>

@@ -5,10 +5,31 @@
       <!-- Company Info -->
       <div class="space-y-4">
         <div class="flex items-center space-x-2">
-          <div class="w-10 h-10 bg-gradient rounded-lg flex items-center justify-center">
+          <!-- <div class="w-10 h-10 bg-gradient rounded-lg flex items-center justify-center">
             <span class="text-white text-xl font-bold">DP</span>
-          </div>
-          <span class="text-xl font-bold">DivJi Poly</span>
+          </div> -->
+          <div class="w-12 h-12 flex items-center justify-center">
+          <svg width="52" height="52" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-label="DivJi Logo" role="img" class="transform hover:scale-105 transition-transform duration-300">
+            <defs>
+              <linearGradient id="navDGradient" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stop-color="#006D77" />
+                <stop offset="100%" stop-color="#83C5BE" />
+              </linearGradient>
+              <linearGradient id="navDHighlight" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stop-color="#83C5BE" />
+                <stop offset="100%" stop-color="#E9ECEF" />
+              </linearGradient>
+              <linearGradient id="navJGradient" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stop-color="#2C6E49" />
+                <stop offset="100%" stop-color="#006D77" />
+              </linearGradient>
+            </defs>
+            <path fill="url(#navDGradient)" d="M30 20 L60 20 A25 30 0 0 1 60 80 L30 80 Z" />
+            <path fill="url(#navDHighlight)" opacity="0.35" mix-blend-mode="screen" d="M35 25 L55 25 Q70 25 70 50 Q70 60 55 60 L35 60 Z" />
+            <path fill="white" stroke="url(#navJGradient)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" d="M62 35 Q75 40 68 75 Q65 88 50 80" />
+          </svg>
+        </div>
+          <span class="text-xl font-bold">DivjiPoly</span>
         </div>
         <p class="text-gray-400">
           Leading manufacturer of high-quality plastic granules for diverse industrial applications.
@@ -39,15 +60,21 @@
 
       <!-- Products -->
       <div>
-        <h3 class="text-lg font-semibold mb-4">Products</h3>
-        <ul class="space-y-2">
-          <li *ngFor="let product of products">
-            <a [routerLink]="['/products']" class="text-gray-400 hover:text-white transition-colors">
-              {{product.label}}
-            </a>
-          </li>
-        </ul>
-      </div>
+  <h3 class="text-lg font-semibold mb-4">Products</h3>
+<div class="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
+  <div *ngFor="let productGroup of chunkArray(products, 4)">
+    <ul class="space-y-2">
+      <li *ngFor="let product of productGroup">
+        <a [routerLink]="['/products']" 
+           [queryParams]="{type: product.type}"
+           class="text-gray-400 hover:text-white transition-colors">
+          {{product.type}}
+        </a>
+      </li>
+    </ul>
+  </div>
+  </div>
+</div>
 
       <!-- Contact Info -->
       <div>
@@ -87,7 +114,7 @@
 
     <!-- Copyright -->
     <div class="border-t border-gray-800 mt-12 pt-8 text-center text-gray-400">
-      <p>&copy; {{currentYear}} DivJi Poly. All rights reserved.</p>
+      <p>&copy; {{currentYear}} DivjiPoly. All rights reserved.</p>
     </div>
   </div>
 </footer>

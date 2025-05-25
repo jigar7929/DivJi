@@ -66,6 +66,15 @@ body {
   }
 }
 
+/* Logo styles */
+.logo-container svg {
+  transition: transform 0.3s ease;
+}
+
+.logo-container:hover svg {
+  transform: scale(1.05);
+}
+
 /* Button styles */
 .btn-primary {
   display: inline-flex;

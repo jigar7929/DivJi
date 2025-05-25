@@ -1,15 +1,39 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
+import { ProductService, PlasticGranule } from '../../services/product.service';
+
+// Import Swiper
+import { register } from 'swiper/element/bundle';
+register(); // Register Swiper custom elements
 
 @Component({
   selector: 'app-home',
   standalone: true,
   imports: [CommonModule, RouterLink],
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css']
+  styleUrls: ['./home.component.css'],
+  encapsulation: ViewEncapsulation.None,
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
-export class HomeComponent {
+export class HomeComponent implements OnInit {
+  products: PlasticGranule[] = [];
+  showNavigation = false;
+
+  constructor(private productService: ProductService) {}
+
+  ngOnInit() {
+    this.productService.getPlasticGranules().subscribe({
+      next: (data) => {
+        this.products = data.plasticGranules;
+        this.showNavigation = this.products.length > 2;
+      },
+      error: (error) => {
+        console.error('Error loading products:', error);
+      }
+    });
+  }
+
   stats = [
     { value: '10+', label: 'Years Experience' },
     { value: '500+', label: 'Satisfied Clients' },

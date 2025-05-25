@@ -1,174 +1,179 @@
-<!-- Hero Section -->
-<section class="relative py-20 bg-gradient overflow-hidden">
-  <!-- Background Pattern -->
-  <div class="absolute inset-0 opacity-10">
-    <div class="absolute inset-0" style="background-image: url('data:image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%23ffffff\' fill-opacity=\'0.4\'%3E%3Cpath d=\'M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')"></div>
+<div class="container mx-auto px-4 py-8">
+  <!-- Loading and Error States -->
+  <div *ngIf="isLoading" class="flex justify-center items-center py-12">
+    <div class="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-[#006D77]"></div>
   </div>
 
-  <div class="container-custom relative z-10">
-    <div class="text-center">
-      <h1 class="title-gradient text-4xl md:text-5xl mb-6">Our Products</h1>
-      <p class="text-white text-xl max-w-3xl mx-auto">
-        Discover our comprehensive range of high-quality plastic granules for various industrial applications.
-      </p>
+  <div *ngIf="error" class="bg-red-50 border border-red-200 rounded-xl p-6 mb-8">
+    <div class="flex items-center space-x-3">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+      </svg>
+      <p class="text-red-700">{{error}}</p>
+    </div>
+    <button 
+      (click)="retryLoading()" 
+      class="mt-4 px-4 py-2 bg-red-100 text-red-700 rounded-lg hover:bg-red-200 transition-colors">
+      Try Again
+    </button>
+  </div>
+
+  <!-- Search and Filter Section -->
+  <div class="mb-8 bg-white rounded-xl shadow-lg p-6">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-2">Search Products</label>
+        <input 
+          type="text" 
+          [(ngModel)]="searchTerm"
+          placeholder="Search by type or name..." 
+          class="w-full px-4 py-2 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-[#006D77] transition-colors"
+        >
+      </div>
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-2">Filter by Type</label>
+        <select 
+          [(ngModel)]="selectedType"
+          class="w-full px-4 py-2 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-[#006D77] transition-colors"
+        >
+          <option value="">All Types</option>
+          <option *ngFor="let type of uniqueTypes" [value]="type">{{type}}</option>
+        </select>
+      </div>
     </div>
   </div>
-</section>
 
-<!-- Product Categories -->
-<section class="section-padding">
-  <div class="container-custom">
-    <div class="grid md:grid-cols-2 gap-8">
-      <!-- HDPE -->
-      <div class="card card-hover">
-        <div class="aspect-video bg-gradient rounded-t-xl p-8 flex items-center justify-center">
-          <h2 class="title-gradient text-3xl">HDPE Granules</h2>
-        </div>
-        <div class="p-8">
-          <h3 class="title-light text-xl mb-4">High-Density Polyethylene</h3>
-          <p class="text-warmGray mb-6">
-            Our HDPE granules offer exceptional strength and durability, perfect for:
-          </p>
-          <ul class="space-y-3 text-warmGray mb-6">
-            <li class="flex items-start">
-              <svg class="w-6 h-6 text-primary mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-              </svg>
-              Containers and bottles
-            </li>
-            <li class="flex items-start">
-              <svg class="w-6 h-6 text-primary mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-              </svg>
-              Industrial pipes
-            </li>
-            <li class="flex items-start">
-              <svg class="w-6 h-6 text-primary mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-              </svg>
-              Storage tanks
-            </li>
-          </ul>
-          <a [routerLink]="['/contact']" class="btn-primary">Get Quote</a>
-        </div>
+  <!-- Products Grid -->
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <div *ngFor="let granule of filteredGranules" 
+         class="group bg-gradient-to-br from-[#006D77] to-[#2C6E49] rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 cursor-pointer relative transform hover:-translate-y-1"
+         (click)="selectGranule(granule)">
+      <!-- Hover Overlay with Cursor Icon -->
+      <div class="absolute inset-0 bg-gradient-to-br from-[#006D77]/20 to-[#83C5BE]/20 opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-center justify-center">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122" />
+        </svg>
       </div>
 
-      <!-- LDPE -->
-      <div class="card card-hover">
-        <div class="aspect-video bg-gradient rounded-t-xl p-8 flex items-center justify-center">
-          <h2 class="title-gradient text-3xl">LDPE Granules</h2>
+      <div class="p-6 relative">
+        <!-- Header with Type and Code -->
+        <div class="flex items-center justify-between mb-4">
+          <div class="flex items-center space-x-2">
+            <h3 class="text-xl font-bold text-white group-hover:text-white/90 transition-colors">{{granule.type}}</h3>
+            <span class="bg-[#E6F5F7] text-[#006D77] text-sm font-semibold px-3 py-1 rounded-full">
+              Code {{granule.recyclingCode}}
+            </span>
+          </div>
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white opacity-0 group-hover:opacity-100 transition-opacity" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+          </svg>
         </div>
-        <div class="p-8">
-          <h3 class="title-light text-xl mb-4">Low-Density Polyethylene</h3>
-          <p class="text-warmGray mb-6">
-            Our LDPE granules provide flexibility and versatility, ideal for:
-          </p>
-          <ul class="space-y-3 text-warmGray mb-6">
-            <li class="flex items-start">
-              <svg class="w-6 h-6 text-primary mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-              </svg>
-              Packaging films
-            </li>
-            <li class="flex items-start">
-              <svg class="w-6 h-6 text-primary mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-              </svg>
-              Plastic bags
-            </li>
-            <li class="flex items-start">
-              <svg class="w-6 h-6 text-primary mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-              </svg>
-              Flexible containers
-            </li>
-          </ul>
-          <a [routerLink]="['/contact']" class="btn-primary">Get Quote</a>
-        </div>
-      </div>
 
-      <!-- Recycled -->
-      <div class="card card-hover">
-        <div class="aspect-video bg-gradient rounded-t-xl p-8 flex items-center justify-center">
-          <h2 class="title-gradient text-3xl">Recycled Granules</h2>
+        <!-- Full Form with Icon -->
+        <div class="flex items-start space-x-3 mb-4">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-white/80 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+          </svg>
+          <p class="text-white/90 group-hover:text-white transition-colors">{{granule.fullForm}}</p>
         </div>
-        <div class="p-8">
-          <h3 class="title-light text-xl mb-4">Sustainable Solutions</h3>
-          <p class="text-warmGray mb-6">
-            Our recycled granules support eco-friendly manufacturing:
-          </p>
-          <ul class="space-y-3 text-warmGray mb-6">
-            <li class="flex items-start">
-              <svg class="w-6 h-6 text-primary mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-              </svg>
-              Non-critical applications
-            </li>
-            <li class="flex items-start">
-              <svg class="w-6 h-6 text-primary mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-              </svg>
-              Cost-effective solutions
-            </li>
-            <li class="flex items-start">
-              <svg class="w-6 h-6 text-primary mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-              </svg>
-              Eco-friendly products
-            </li>
-          </ul>
-          <a [routerLink]="['/contact']" class="btn-primary">Get Quote</a>
-        </div>
-      </div>
 
-      <!-- Custom -->
-      <div class="card card-hover">
-        <div class="aspect-video bg-gradient rounded-t-xl p-8 flex items-center justify-center">
-          <h2 class="title-gradient text-3xl">Custom Solutions</h2>
-        </div>
-        <div class="p-8">
-          <h3 class="title-light text-xl mb-4">Tailored Products</h3>
-          <p class="text-warmGray mb-6">
-            We offer customized solutions to meet specific requirements:
-          </p>
-          <ul class="space-y-3 text-warmGray mb-6">
-            <li class="flex items-start">
-              <svg class="w-6 h-6 text-primary mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-              </svg>
-              Specific applications
-            </li>
-            <li class="flex items-start">
-              <svg class="w-6 h-6 text-primary mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-              </svg>
-              Custom properties
-            </li>
-            <li class="flex items-start">
-              <svg class="w-6 h-6 text-primary mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-              </svg>
-              Specialized solutions
-            </li>
-          </ul>
-          <a [routerLink]="['/contact']" class="btn-primary">Get Quote</a>
+        <!-- Grades Section -->
+        <div class="space-y-3">
+          <div class="flex items-center space-x-2">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-white/80" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+            </svg>
+            <p class="text-sm text-white/80 group-hover:text-white transition-colors">Available Grades: {{granule.grades.length}}</p>
+          </div>
+          <div class="flex flex-wrap gap-2">
+            <span *ngFor="let grade of granule.grades.slice(0, 3)" 
+                  class="bg-[#E6F5F7]/90 text-[#006D77] text-xs px-3 py-1.5 rounded-full group-hover:bg-white group-hover:text-[#006D77] transition-colors">
+              {{grade.code}}
+            </span>
+            <span *ngIf="granule.grades.length > 3" 
+                  class="bg-white/90 text-[#006D77] text-xs px-3 py-1.5 rounded-full">
+              +{{granule.grades.length - 3}} more
+            </span>
+          </div>
         </div>
       </div>
     </div>
   </div>
-</section>
 
-<!-- CTA Section -->
-<section class="section-padding bg-gradient">
-  <div class="container-custom text-center">
-    <h2 class="title-gradient text-3xl md:text-4xl mb-6">
-      Need a Custom Solution?
-    </h2>
-    <p class="text-white text-xl mb-8 max-w-2xl mx-auto">
-      Contact us to discuss your specific requirements and let us help you find the perfect solution for your needs.
-    </p>
-    <a [routerLink]="['/contact']" class="btn-secondary">
-      Get in Touch
-    </a>
+  <!-- Detailed View Modal -->
+  <div *ngIf="selectedGranule" 
+       class="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm flex items-center justify-center z-50"
+       (click)="clearSelection()">
+    <div class="bg-white rounded-xl shadow-2xl max-w-4xl w-full m-4 p-8 max-h-[90vh] overflow-y-auto"
+         (click)="$event.stopPropagation()">
+      <div class="flex justify-between items-center mb-6">
+        <div>
+          <h2 class="text-3xl font-bold text-[#006D77]">{{selectedGranule.type}}</h2>
+          <p class="text-gray-600">{{selectedGranule.fullForm}}</p>
+        </div>
+        <button (click)="clearSelection()" class="text-gray-500 hover:text-gray-700 transition-colors">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+
+      <div class="space-y-6">
+        <div *ngFor="let grade of selectedGranule.grades" class="bg-gray-50 rounded-lg p-6">
+          <div class="flex items-center justify-between mb-4">
+            <h3 class="text-xl font-semibold text-[#006D77]">{{grade.name}}</h3>
+            <span class="bg-[#E6F5F7] text-[#006D77] px-3 py-1 rounded-full text-sm">{{grade.code}}</span>
+          </div>
+          
+          <p class="text-gray-600 mb-4">{{grade.description}}</p>
+          
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <h4 class="font-medium text-gray-700 mb-2">Technical Specifications</h4>
+              <div class="space-y-2">
+                <p class="text-sm"><span class="font-medium">MFI:</span> {{grade.mfi}}</p>
+                <p class="text-sm"><span class="font-medium">Density:</span> {{grade.density}}</p>
+              </div>
+            </div>
+            
+            <div>
+              <h4 class="font-medium text-gray-700 mb-2">Processing Methods</h4>
+              <div class="flex flex-wrap gap-2">
+                <span *ngFor="let method of grade.processingMethods" 
+                      class="bg-[#E6F5F7] text-[#006D77] text-sm px-3 py-1 rounded-full">
+                  {{method}}
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+            <div>
+              <h4 class="font-medium text-gray-700 mb-2">Common Uses</h4>
+              <ul class="list-disc list-inside text-sm text-gray-600">
+                <li *ngFor="let use of grade.uses">{{use}}</li>
+              </ul>
+            </div>
+            
+            <div>
+              <h4 class="font-medium text-gray-700 mb-2">Products</h4>
+              <ul class="list-disc list-inside text-sm text-gray-600">
+                <li *ngFor="let product of grade.products">{{product}}</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="mt-4">
+            <h4 class="font-medium text-gray-700 mb-2">Industries</h4>
+            <div class="flex flex-wrap gap-2">
+              <span *ngFor="let industry of grade.industries" 
+                    class="bg-gray-100 text-gray-700 text-sm px-3 py-1 rounded-full">
+                {{industry}}
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
-</section>
+</div>
