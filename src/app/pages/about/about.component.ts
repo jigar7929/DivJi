@@ -14,7 +14,7 @@ export class AboutComponent {
     {
       year: '2010',
       title: 'Company Founded',
-      description: 'DivJi Poly was established with a vision to provide high-quality plastic granules to the manufacturing industry.'
+      description: 'DivJiPoly was established with a vision to provide high-quality plastic granules to the manufacturing industry.'
     },
     {
       year: '2013',
